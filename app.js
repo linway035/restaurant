@@ -29,7 +29,7 @@ app.get("/search", (req, res) => {
   const filterRestaurants = restaurantList.results.filter((restaurant) => {
     return (
       restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
-      restaurant.category.includes(keyword)
+      restaurant.category.toLowerCase().includes(keyword.toLowerCase())
     );
   });
   //index.hbs要用，keyword保留住，不清空搜尋欄
