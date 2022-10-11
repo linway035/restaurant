@@ -7,7 +7,7 @@
 
 ## 專案畫面
 
-![Index page](./public/index.png)
+![Index page about Restaurant List](./public/image/index.png)
 
 ---
 
