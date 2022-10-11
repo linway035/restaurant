@@ -5,6 +5,8 @@ const port = 3000;
 const exphbs = require("express-handlebars"); //沒給路徑，則判斷去node_modules裡面找
 const restaurantList = require("./restaurant.json"); //相對路徑，與app同階
 
+const Restaurant = require("./models/restaurant.js"); // 載入 Todo model
+
 const mongoose = require("mongoose"); // 載入 mongoose
 mongoose.connect(process.env.MONGODB_URI, {
   // 設定連線到 mongoDB
@@ -30,8 +32,13 @@ app.use(express.static("public"));
 
 // routes setting
 app.get("/", (req, res) => {
-  // restaurants這名稱hbs #each那要用。
-  res.render("index", { restaurants: restaurantList.results });
+  Restaurant.find()
+    .lean()
+    .then((restaurants) => {
+      // restaurants這名稱hbs #each那要用。
+      res.render("index", { restaurants });
+    })
+    .catch((error) => console.log("error!"));
 });
 
 app.get("/restaurants/:restaurant_id", (req, res) => {
