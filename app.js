@@ -4,7 +4,7 @@ const port = 3000;
 // require express-handlebars here
 const exphbs = require("express-handlebars"); //沒給路徑，則判斷去node_modules裡面找
 const Restaurant = require("./models/restaurant.js"); //相對路徑，與app同階
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true })); // setting body-parser
 
 const mongoose = require("mongoose"); // 載入 mongoose
 mongoose.connect(process.env.MONGODB_URI, {
@@ -64,16 +64,50 @@ app.get("/restaurants/:restaurant_id", (req, res) => {
     .catch((error) => console.log("show error!"));
 });
 
+//修改清單餐廳get&put (code幾乎同瀏覽段)
+app.get("/restaurants/:restaurant_id/edit", (req, res) => {
+  const restaurantID = req.params.restaurant_id;
+  return Restaurant.findById(restaurantID)
+    .lean()
+    .then((restaurantItem) => res.render("edit", { restaurantItem }))
+    .catch((error) => console.log("edit error!"));
+});
+app.post("/restaurants/:restaurant_id", (req, res) => {
+  const restaurantID = req.params.restaurant_id;
+  console.log(restaurantID);
+  return Restaurant.findByIdAndUpdate(restaurantID, req.body)
+    .lean()
+    .then(() => res.redirect(`/restaurants/${restaurantID}`))
+    .catch((error) => console.log("edit error!"));
+});
+
+//刪除項目
+app.post("/restaurants/:restaurant_id/delete", (req, res) => {
+  const restaurantID = req.params.restaurant_id;
+  Restaurant.findById(restaurantID)
+    .then((restaurant) => restaurant.remove())
+    .then(() => res.redirect("/"))
+    .catch((error) => console.log(error));
+});
+
+//搜尋餐廳
 app.get("/search", (req, res) => {
-  const keyword = req.query.keyword.trim(); //.keyword這名稱來自form的input name
-  const filterRestaurants = restaurantList.results.filter((restaurant) => {
-    return (
-      restaurant.name.toLowerCase().includes(keyword.toLowerCase()) ||
-      restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-    );
-  });
-  //index.hbs要用，keyword保留住，不清空搜尋欄
-  res.render("index", { restaurants: filterRestaurants, keywords: keyword });
+  const keywordOriginal = req.query.keyword; //.keyword這名稱來自form的input name
+  const keyword = req.query.keyword.trim().toLowerCase();
+  Restaurant.find()
+    .lean()
+    .then((restaurants) => {
+      const filterRestaurants = restaurants.filter(
+        (restaurant) =>
+          restaurant.name.toLowerCase().includes(keyword) ||
+          restaurant.category.includes(keyword)
+      );
+      res.render("index", {
+        restaurants: filterRestaurants,
+        keywords: keywordOriginal, //keywords這名稱來自form的input value
+      });
+    })
+    .catch((error) => console.log(error));
 });
 
 // listen
