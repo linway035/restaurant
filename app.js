@@ -3,9 +3,8 @@ const app = express();
 const port = 3000;
 // require express-handlebars here
 const exphbs = require("express-handlebars"); //沒給路徑，則判斷去node_modules裡面找
-const restaurantList = require("./restaurant.json"); //相對路徑，與app同階
-
-const Restaurant = require("./models/restaurant.js"); // 載入 Todo model
+const Restaurant = require("./models/restaurant.js"); //相對路徑，與app同階
+app.use(express.urlencoded({ extended: true }));
 
 const mongoose = require("mongoose"); // 載入 mongoose
 mongoose.connect(process.env.MONGODB_URI, {
@@ -30,7 +29,7 @@ app.set("view engine", "handlebars");
 // setting static files靜態檔案
 app.use(express.static("public"));
 
-// routes setting
+// 首頁
 app.get("/", (req, res) => {
   Restaurant.find()
     .lean()
@@ -41,13 +40,14 @@ app.get("/", (req, res) => {
     .catch((error) => console.log("error!"));
 });
 
-app.get("/restaurants/:restaurant_id", (req, res) => {
-  const restaurant = restaurantList.results.find(
-    (item) => item.id.toString() === req.params.restaurant_id
-  );
-  // restaurantItem，show.hbs 那要用
-  res.render("show", { restaurantItem: restaurant });
-});
+// //瀏覽特定餐廳
+// app.get("/restaurants/:restaurant_id", (req, res) => {
+//   const restaurant = restaurantList.results.find(
+//     (item) => item.id.toString() === req.params.restaurant_id
+//   );
+//   // restaurantItem，show.hbs 那要用
+//   res.render("show", { restaurantItem: restaurant });
+// });
 
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword.trim(); //.keyword這名稱來自form的input name
@@ -59,6 +59,17 @@ app.get("/search", (req, res) => {
   });
   //index.hbs要用，keyword保留住，不清空搜尋欄
   res.render("index", { restaurants: filterRestaurants, keywords: keyword });
+});
+
+//新增清單的get&post
+app.get("/restaurants/create_new", (req, res) => {
+  return res.render("new");
+});
+app.post("/restaurants", (req, res) => {
+  console.log(req.body);
+  Restaurant.create(req.body)
+    .then(() => res.redirect("/"))
+    .catch((error) => console.log("create error!"));
 });
 
 app.listen(port, () => {
