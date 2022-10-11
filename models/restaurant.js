@@ -35,8 +35,6 @@ const restaurantSchema = new Schema({
     type: Number,
     required: true,
   },
-  description: {
-    type: String,
-  },
+  description: String, // String is shorthand for {type: String}
 });
 module.exports = mongoose.model("Restaurant", restaurantSchema);
