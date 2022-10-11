@@ -4,6 +4,24 @@ const port = 3000;
 // require express-handlebars here
 const exphbs = require("express-handlebars"); //沒給路徑，則判斷去node_modules裡面找
 const restaurantList = require("./restaurant.json"); //相對路徑，與app同階
+
+const mongoose = require("mongoose"); // 載入 mongoose
+mongoose.connect(process.env.MONGODB_URI, {
+  // 設定連線到 mongoDB
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+// 取得資料庫連線狀態
+const db = mongoose.connection;
+// 連線異常
+db.on("error", () => {
+  console.log("mongodb error!");
+});
+// 連線成功
+db.once("open", () => {
+  console.log("mongodb connected!");
+});
+
 // setting template engine
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -37,5 +55,5 @@ app.get("/search", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("okokokok");
+  console.log(`App is running on http://localhost:${port}`);
 });
