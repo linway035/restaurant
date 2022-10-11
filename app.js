@@ -40,14 +40,29 @@ app.get("/", (req, res) => {
     .catch((error) => console.log("error!"));
 });
 
+//新增清單的get&post
+app.get("/restaurants/create_new", (req, res) => {
+  return res.render("new");
+});
+app.post("/restaurants", (req, res) => {
+  // console.log(req.body);
+  Restaurant.create(req.body)
+    .then(() => res.redirect("/"))
+    .catch((error) => console.log("create error!"));
+});
+
 // //瀏覽特定餐廳
-// app.get("/restaurants/:restaurant_id", (req, res) => {
-//   const restaurant = restaurantList.results.find(
-//     (item) => item.id.toString() === req.params.restaurant_id
-//   );
-//   // restaurantItem，show.hbs 那要用
-//   res.render("show", { restaurantItem: restaurant });
-// });
+app.get("/restaurants/:restaurant_id", (req, res) => {
+  // console.log(req);
+  const restaurantID = req.params.restaurant_id;
+  // console.log(restaurantID);
+  return Restaurant.findById(restaurantID)
+    .lean()
+    .then((restaurantItem) => {
+      res.render("show", { restaurantItem });
+    })
+    .catch((error) => console.log("show error!"));
+});
 
 app.get("/search", (req, res) => {
   const keyword = req.query.keyword.trim(); //.keyword這名稱來自form的input name
@@ -61,17 +76,7 @@ app.get("/search", (req, res) => {
   res.render("index", { restaurants: filterRestaurants, keywords: keyword });
 });
 
-//新增清單的get&post
-app.get("/restaurants/create_new", (req, res) => {
-  return res.render("new");
-});
-app.post("/restaurants", (req, res) => {
-  console.log(req.body);
-  Restaurant.create(req.body)
-    .then(() => res.redirect("/"))
-    .catch((error) => console.log("create error!"));
-});
-
+// listen
 app.listen(port, () => {
   console.log(`App is running on http://localhost:${port}`);
 });
