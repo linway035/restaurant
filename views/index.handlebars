@@ -70,7 +70,10 @@
               <a href="/restaurants/{{this._id}}"><button
                   class="btn btn-info btn-sm mr-1"
                 >Detail</button></a>
-              <form action="/restaurants/{{this._id}}/delete" method="POST">
+              <form
+                action="/restaurants/{{this._id}}?_method=delete"
+                method="POST"
+              >
                 <button
                   type="submit"
                   class="btn btn-danger btn-sm text-white"

@@ -9,7 +9,10 @@
             <i class="fa-solid fa-store"></i></h5>
           <hr />
           {{! 注意action需要更改成edit的 }}
-          <form action="/restaurants/{{restaurantItem._id}}" method="POST">
+          <form
+            action="/restaurants/{{restaurantItem._id}}?_method=put"
+            method="POST"
+          >
             <div class="row mb-2 g-2 align-items-center">
               <label for="name" class="col-md-4 col-form-label">
                 餐廳名稱

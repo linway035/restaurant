@@ -5,6 +5,10 @@ const port = 3000;
 const exphbs = require("express-handlebars"); //沒給路徑，則判斷去node_modules裡面找
 const Restaurant = require("./models/restaurant.js"); //相對路徑，與app同階
 app.use(express.urlencoded({ extended: true })); // setting body-parser
+// 載入 method-override
+const methodOverride = require("method-override");
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride("_method"));
 
 const mongoose = require("mongoose"); // 載入 mongoose
 mongoose.connect(process.env.MONGODB_URI, {
@@ -72,7 +76,7 @@ app.get("/restaurants/:restaurant_id/edit", (req, res) => {
     .then((restaurantItem) => res.render("edit", { restaurantItem }))
     .catch((error) => console.log("edit error!"));
 });
-app.post("/restaurants/:restaurant_id", (req, res) => {
+app.put("/restaurants/:restaurant_id", (req, res) => {
   const restaurantID = req.params.restaurant_id;
   console.log(restaurantID);
   return Restaurant.findByIdAndUpdate(restaurantID, req.body)
@@ -82,7 +86,7 @@ app.post("/restaurants/:restaurant_id", (req, res) => {
 });
 
 //刪除項目
-app.post("/restaurants/:restaurant_id/delete", (req, res) => {
+app.delete("/restaurants/:restaurant_id", (req, res) => {
   const restaurantID = req.params.restaurant_id;
   Restaurant.findById(restaurantID)
     .then((restaurant) => restaurant.remove())
