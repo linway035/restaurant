@@ -2,11 +2,13 @@
 const express = require("express");
 const router = express.Router();
 const Restaurant = require("../../models/restaurant.js"); //相對路徑
+
 // 首頁
 router.get("/", (req, res) => {
+  console.log(req.query);
   Restaurant.find()
     .lean()
-    .sort({ name: "asc" })
+    .sort({ _id: "desc" })
     .then((restaurants) => {
       // restaurants這名稱hbs #each那要用。
       res.render("index", { restaurants });

@@ -5,29 +5,47 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
+
+      <div class="d-flex justify-content-between mb-2">
+        <h4>尋找餐廳：</h4>
+        <a href="/restaurants/create_new">
+          <button type="button" class="btn btn-success">新增清單
+            <i class="fa-solid fa-store"></i></button>
+        </a>
+      </div>
       <form action="/search">
-        <h4 class="mb-2">尋找餐廳：</h4>
-        <div class="input-group">
-          <input
-            type="text"
-            name="keyword"
-            class="form-control"
-            placeholder="輸入餐廳、分類"
-            aria-label="Restaurant Name..."
-            value="{{keywords}}"
-            aria-describedby="search-button"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-major" type="submit" id="search-button"><i
-                class="fas fa-search"
-              ></i></button>
+        <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-2">
+          <div class="input-group">
+            <input
+              type="text"
+              name="keyword"
+              class="form-control"
+              placeholder="輸入餐廳、分類"
+              aria-label="Restaurant Name..."
+              value="{{keywords}}"
+              aria-describedby="search-button"
+            />
+            <button class="btn btn-major mr-1" type="submit" id="search-button">
+              <i class="fas fa-search"></i>
+            </button>
+            <select
+              class="form-select rounded border border-light"
+              id="sort"
+              name="sort"
+              onchange="this.form.submit()"
+              aria-label="Default select example"
+            >
+              <option> 請選擇排序方式 </option>
+              <option value="1">A->Z</option>
+              <option value="2">Z->A</option>
+              <option value="3">類別</option>
+              <option value="4">地區</option>
+              <option value="5">評價高->低</option>
+              <option value="6">評價低->高</option>
+            </select>
           </div>
         </div>
-        <div class="pt-2 d-flex justify-content-end">
-          <a href="/restaurants/create_new">
-            <button type="button" class="btn btn-primary">新增清單</button>
-          </a>
-        </div>
+
       </form>
     </div>
   </div>
