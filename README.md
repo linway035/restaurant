@@ -7,7 +7,7 @@
 
 ## 專案畫面
 
-![Index page about Restaurant List](./public/image/index.png)
+![Index page about Restaurant List](./public/image/index2.png)
 
 ---
 
@@ -19,6 +19,7 @@
 - Bootstrap 4.3.1
 - Font-awesome 6.2.0
 - Mongoose 5.9.7
+- method-override 3.0.0
 
 ## 使用說明
 
@@ -42,3 +43,4 @@
 - 搜尋欄可透過餐廳名稱或餐品種類搜尋
 - 點選店家後，可以瀏覽詳細資訊
 - 新增、修改，及移除清單項目
+- 選擇排序方式
