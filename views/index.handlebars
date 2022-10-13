@@ -35,13 +35,13 @@
               onchange="this.form.submit()"
               aria-label="Default select example"
             >
-              <option> 請選擇排序方式 </option>
-              <option value="1">A->Z</option>
-              <option value="2">Z->A</option>
-              <option value="3">類別</option>
-              <option value="4">地區</option>
-              <option value="5">評價高->低</option>
-              <option value="6">評價低->高</option>
+              <option value="0" {{#if sortValue.sortZero }}selected{{/if}}> 請選擇排序方式 </option>
+              <option value="1" {{#if sortValue.sortOne }}selected{{/if}}>A->Z</option>
+              <option value="2" {{#if sortValue.sortTwo }}selected{{/if}}>Z->A</option>
+              <option value="3" {{#if sortValue.sortThree }}selected{{/if}}>類別</option>
+              <option value="4" {{#if sortValue.sortFour }}selected{{/if}}>地區</option>
+              <option value="5" {{#if sortValue.sortFive }}selected{{/if}}>評價高->低</option>
+              <option value="6" {{#if sortValue.sortSix }}selected{{/if}}>評價低->高</option>
             </select>
           </div>
         </div>

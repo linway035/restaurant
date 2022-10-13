@@ -9,6 +9,15 @@ router.get("/", (req, res) => {
   const keywordOriginal = req.query.keyword; //.keyword這名稱來自form的input name
   const keyword = req.query.keyword.trim().toLowerCase();
   // console.log(req.query);
+  const sortValue = {
+    sortZero: req.query.sort === "0",
+    sortOne: req.query.sort === "1",
+    sortTwo: req.query.sort === "2",
+    sortThree: req.query.sort === "3",
+    sortFour: req.query.sort === "4",
+    sortFive: req.query.sort === "5",
+    sortSix: req.query.sort === "6",
+  };
   Restaurant.find()
     .lean()
     .sort(sortContent(req.query.sort))
@@ -21,6 +30,7 @@ router.get("/", (req, res) => {
       res.render("index", {
         restaurants: filterRestaurants,
         keywords: keywordOriginal, //keywords這名稱來自form的input value
+        sortValue: sortValue,
       });
     })
     .catch((error) => console.log(error));
