@@ -1,11 +1,11 @@
 // 引用 Express 與 Express 路由器
 const express = require("express");
 const router = express.Router();
-const Restaurant = require("../../models/restaurant.js"); //相對路徑
+// 引用  model
+const Restaurant = require("../../models/restaurant");
 
 // 首頁
 router.get("/", (req, res) => {
-  console.log(req.query);
   Restaurant.find()
     .lean()
     .sort({ _id: "desc" })

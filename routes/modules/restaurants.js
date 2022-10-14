@@ -1,7 +1,8 @@
 // 引用 Express 與 Express 路由器
 const express = require("express");
 const router = express.Router();
-const Restaurant = require("../../models/restaurant.js"); //相對路徑
+// 引用  model
+const Restaurant = require("../../models/restaurant");
 
 //新增清單的get&post
 router.get("/create_new", (req, res) => {
@@ -14,7 +15,7 @@ router.post("/", (req, res) => {
     .catch((error) => console.log("create error!"));
 });
 
-// //瀏覽特定餐廳
+//瀏覽特定餐廳
 router.get("/:restaurant_id", (req, res) => {
   // console.log(req);
   const restaurantID = req.params.restaurant_id;
@@ -37,7 +38,7 @@ router.get("/:restaurant_id/edit", (req, res) => {
 });
 router.put("/:restaurant_id", (req, res) => {
   const restaurantID = req.params.restaurant_id;
-  console.log(restaurantID);
+  // console.log("put",restaurantID);
   return Restaurant.findByIdAndUpdate(restaurantID, req.body)
     .lean()
     .then(() => res.redirect(`/restaurants/${restaurantID}`))
