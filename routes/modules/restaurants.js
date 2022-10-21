@@ -9,7 +9,18 @@ router.get("/create_new", (req, res) => {
   return res.render("new");
 });
 router.post("/", (req, res) => {
-  // console.log(req.body);
+  //   console.log(req.body);
+  //   {
+  //   name: 'test3',
+  //   name_en: '',
+  //   category: '日本料理',
+  //   image: '',
+  //   location: 'test3',
+  //   phone: 'test3',
+  //   google_map: '',
+  //   rating: '0.1',
+  //   description: 'test3'
+  // }
   Restaurant.create(req.body)
     .then(() => res.redirect("/"))
     .catch((error) => console.log("create error!"));
