@@ -1,30 +1,38 @@
 const express = require("express");
+const session = require("express-session");
 const exphbs = require("express-handlebars"); //沒給路徑，則判斷去node_modules裡面找
+const methodOverride = require("method-override"); // 載入 method-override
+
+const routes = require("./routes"); // 引用路由器
+require("./config/mongoose");
+
 const app = express();
 const port = 3000;
 
-// const Restaurant = require("./models/restaurant.js"); //相對路徑，與app同階
-
-// setting body-parser
-app.use(express.urlencoded({ extended: true }));
-
-// 載入 method-override
-const methodOverride = require("method-override");
-// 設定每一筆請求都會透過 methodOverride 進行前置處理
-app.use(methodOverride("_method"));
-
-// 引用路由器
-const routes = require("./routes");
-// 將 request 導入路由器
-app.use(routes);
-
-require("./config/mongoose");
+// setting static files靜態檔案
+app.use(express.static("public"));
 
 // setting template engine
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-// setting static files靜態檔案
-app.use(express.static("public"));
+
+//設定 express-session (放在app.use(routes)前就好)
+app.use(
+  session({
+    secret: "ThisIsMySecret",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+// setting body-parser
+app.use(express.urlencoded({ extended: true }));
+
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride("_method"));
+
+// 將 request 導入路由器
+app.use(routes);
 
 // listen
 app.listen(port, () => {
