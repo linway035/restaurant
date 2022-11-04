@@ -7,6 +7,7 @@ const sortContent = require("../../utilities/sortContent");
 
 //搜尋餐廳
 router.get("/", (req, res) => {
+  const userId = req.user._id;
   const keywordOriginal = req.query.keyword; //.keyword這名稱來自form的input name
   const keyword = req.query.keyword.trim().toLowerCase();
   // console.log("search",req.query);
@@ -19,7 +20,7 @@ router.get("/", (req, res) => {
     sortFive: req.query.sort === "5",
     sortSix: req.query.sort === "6",
   };
-  Restaurant.find()
+  Restaurant.findOne({ _id: restaurantID, userId })
     .lean()
     .sort(sortContent(req.query.sort))
     .then((restaurants) => {

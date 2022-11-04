@@ -36,5 +36,12 @@ const restaurantSchema = new Schema({
     required: true,
   },
   description: String, // String is shorthand for {type: String}
+  userId: {
+    // 加入關聯設定
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    index: true,
+    required: true,
+  },
 });
 module.exports = mongoose.model("Restaurant", restaurantSchema);

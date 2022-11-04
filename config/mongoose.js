@@ -3,6 +3,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   // 設定連線到 哪一個database (需調整process.env.MONGODB_URI)
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 // 取得資料庫連線狀態
 const db = mongoose.connection;
