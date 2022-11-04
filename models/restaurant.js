@@ -1,6 +1,6 @@
-//定義 資料結構 Schema，確保每一筆資料長相
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+// 定義 資料結構 Schema，確保每一筆資料長相
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 const restaurantSchema = new Schema({
   // id: {
   //   type: Number,
@@ -8,40 +8,40 @@ const restaurantSchema = new Schema({
   // },
   name: {
     type: String,
-    required: true,
+    required: true
   },
   name_en: {
-    type: String,
+    type: String
   },
   category: {
     type: String,
-    required: true,
+    required: true
   },
   image: {
-    type: String,
+    type: String
   },
   location: {
     type: String,
-    required: true,
+    required: true
   },
   phone: {
     type: String,
-    required: true,
+    required: true
   },
   google_map: {
-    type: String,
+    type: String
   },
   rating: {
     type: Number,
-    required: true,
+    required: true
   },
   description: String, // String is shorthand for {type: String}
   userId: {
     // 加入關聯設定
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: 'User',
     index: true,
-    required: true,
-  },
-});
-module.exports = mongoose.model("Restaurant", restaurantSchema);
+    required: true
+  }
+})
+module.exports = mongoose.model('Restaurant', restaurantSchema)
