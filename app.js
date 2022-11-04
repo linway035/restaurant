@@ -36,6 +36,13 @@ app.use(methodOverride("_method"));
 // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
 usePassport(app);
 
+//設定本地變數 res.locals，在 usePassport(app) 之後、app.use(routes) 之前
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.user = req.user;
+  next();
+});
+
 // 將 request 導入路由器
 app.use(routes);
 
