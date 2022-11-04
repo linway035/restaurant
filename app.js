@@ -4,6 +4,11 @@ const exphbs = require("express-handlebars"); //沒給路徑，則判斷去node_
 const methodOverride = require("method-override"); // 載入 method-override
 const flash = require("connect-flash"); // flash message
 
+//dotenv把東西放入process.env
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 const routes = require("./routes"); // 引用路由器
 
 const usePassport = require("./config/passport"); // 載入設定檔，要寫在 express-session 以後
