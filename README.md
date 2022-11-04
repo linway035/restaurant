@@ -1,13 +1,15 @@
 # 我的餐廳清單
 
-提供各式料理的餐廳清單，並可察看餐廳簡介、地址電話，及評分資訊等。
-亦可自行新增及修改清單，打造專屬的餐廳集合。
+使用者須先註冊，登入後可以建立自己專屬的餐廳清單。
+包含新增、修改、排序及查詢功能。
+清單內容可以查看類別、餐廳簡介、地址、電話，及評分資訊等。
 
 ---
 
 ## 專案畫面
 
-![Index page about Restaurant List](./public/image/index2.png)
+![Index page about Restaurant List](./public/image/index4.png)
+![Index page about Restaurant Login](./public/image/index3.png)
 
 ---
 
@@ -20,6 +22,13 @@
 - Font-awesome 6.2.0
 - Mongoose 5.9.7
 - method-override 3.0.0
+- bcryptjs 2.4.3
+- connect-flash 0.1.1
+- dotenv 8.2.0
+- express-session 1.17.1
+- passport 0.4.1
+- passport-facebook 3.0.0
+- passport-local 1.0.0
 
 ## 使用說明
 
@@ -39,6 +48,7 @@
 
 ## 網站功能介紹
 
+- 需註冊後才能使用，可使用 Facebook 註冊
 - 卡片式清單，包含餐廳照片、名稱及評分
 - 搜尋欄可透過餐廳名稱或餐品種類搜尋
 - 點選店家後，可以瀏覽詳細資訊
