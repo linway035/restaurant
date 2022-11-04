@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const exphbs = require("express-handlebars"); //沒給路徑，則判斷去node_modules裡面找
 const methodOverride = require("method-override"); // 載入 method-override
+const flash = require("connect-flash"); // flash message
 
 const routes = require("./routes"); // 引用路由器
 
@@ -36,10 +37,15 @@ app.use(methodOverride("_method"));
 // 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
 usePassport(app);
 
+// flash message
+app.use(flash());
+
 //設定本地變數 res.locals，在 usePassport(app) 之後、app.use(routes) 之前
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated();
   res.locals.user = req.user;
+  res.locals.success_msg = req.flash("success_msg"); // 設定 success_msg 訊息
+  res.locals.warning_msg = req.flash("warning_msg"); // 設定 warning_msg 訊息
   next();
 });
 
